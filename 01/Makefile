@@ -5,6 +5,7 @@ OBJECTS = alloc.o tests.o main.o
 EXECUTABLE = project
 
 test: $(EXECUTABLE)
+	./$(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(COMP) $(LFLAGS) $(OBJECTS) -o $@
