@@ -4,6 +4,8 @@ LFLAGS =
 OBJECTS = alloc.o tests.o main.o
 EXECUTABLE = project
 
+all: $(EXECUTABLE)
+
 test: $(EXECUTABLE)
 	./$(EXECUTABLE)
 
