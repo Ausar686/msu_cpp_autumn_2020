@@ -1,11 +1,11 @@
 #include <cstddef>
 #include "alloc.h"
 
-Allocator::Allocator(char *base, char *cur, size_t size)
+Allocator::Allocator(void)
 {
-    this->base_ptr = base;
-    this->cur_ptr = cur;
-    this->alloc_size = size;
+    this->base_ptr = nullptr;
+    this->cur_ptr = nullptr;
+    this->alloc_size = 0;
 }
 
 Allocator::~Allocator(void)

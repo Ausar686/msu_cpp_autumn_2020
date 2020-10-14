@@ -7,7 +7,7 @@ using namespace std;
 
 void first_test(void)
 {   
-    Allocator *allocator = new Allocator(nullptr, nullptr, 0);
+    Allocator *allocator = new Allocator();
     size_t max_size = 10;
     size_t size = 1;
     allocator->make_allocator(max_size);
@@ -20,7 +20,7 @@ void first_test(void)
 
 void two_alloc_test(void)
 {   
-    Allocator *allocator = new Allocator(nullptr, nullptr, 0);
+    Allocator *allocator = new Allocator();
     size_t max_size = 10;
     size_t size1 = 2;
     size_t size2 = 3;
@@ -35,7 +35,7 @@ void two_alloc_test(void)
 
 void too_big_test(void)
 {   
-    Allocator *allocator = new Allocator(nullptr, nullptr, 0);
+    Allocator *allocator = new Allocator();
     size_t max_size = 10;
     size_t size = 11;
     allocator->make_allocator(max_size);
@@ -48,7 +48,7 @@ void too_big_test(void)
 
 void too_big_test_again(void)
 {   
-    Allocator *allocator = new Allocator(nullptr, nullptr, 0);
+    Allocator *allocator = new Allocator();
     size_t max_size = 10;
     size_t size1 = 2;
     size_t size2 = 9;
@@ -63,7 +63,7 @@ void too_big_test_again(void)
 
 void precise_test(void)
 {   
-    Allocator *allocator = new Allocator(nullptr, nullptr, 0);
+    Allocator *allocator = new Allocator();
     size_t max_size = 10;
     size_t size1 = 4;
     size_t size2 = 6;
@@ -78,7 +78,7 @@ void precise_test(void)
 
 void precise_test_again(void)
 {   
-    Allocator *allocator = new Allocator(nullptr, nullptr, 0);
+    Allocator *allocator = new Allocator();
     size_t max_size = 10;
     size_t size1 = 4;
     size_t size2 = 6;
@@ -95,7 +95,7 @@ void precise_test_again(void)
 
 void reset_test(void)
 {   
-    Allocator *allocator = new Allocator(nullptr, nullptr, 0);
+    Allocator *allocator = new Allocator();
     size_t max_size = 10;
     size_t size1 = 4;
     size_t size2 = 3;
@@ -111,7 +111,7 @@ void reset_test(void)
 
 void double_init_test(void)
 {   
-    Allocator *allocator = new Allocator(nullptr, nullptr, 0);
+    Allocator *allocator = new Allocator();
     size_t max_size1 = 10;
     size_t max_size2 = 15;
     allocator->make_allocator(max_size1);

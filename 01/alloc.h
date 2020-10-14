@@ -8,7 +8,7 @@ class Allocator
         char *cur_ptr;
         size_t alloc_size;
     public:
-        Allocator(char *, char *, size_t);
+        Allocator(void);
         ~Allocator(void);
         void make_allocator(size_t);
         char *alloc(size_t);
