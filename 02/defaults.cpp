@@ -1,4 +1,8 @@
+#include <iostream>
 #include <cinttypes>
+#include <string>
+
+using namespace std;
 
 void
 base_int(uint64_t num) /*Does nothing*/
@@ -7,8 +11,7 @@ base_int(uint64_t num) /*Does nothing*/
 }
 
 void
-base_char(unsigned char *symbol) /*Does nothing*/
+base_string(std::string str) /*Does nothing*/
 {
     return;
 }
-

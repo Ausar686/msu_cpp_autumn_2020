@@ -1,29 +1,25 @@
 #pragma once
 #include <cinttypes>
+#include <functional>
 
-using func_uint64_t = void(*)(uint64_t);
-using func_uchar_t = void(*)(unsigned char *);
+using func_uint64_t = std::function <void(uint64_t)>;
+using func_string_t = std::function <void(std::string)>;
 
 class TokenParser
 {
 private:
-    unsigned char *buf;
-    uint64_t buf_size;
     func_uint64_t int_func;
-    func_uchar_t char_func;
-    func_uint64_t base_int_func;
-    func_uchar_t base_char_func;
+    func_string_t string_func;
 public:
     TokenParser(void);
     ~TokenParser(void);
-    void change_size(uint64_t);
-    void token_parse(unsigned char *);
+    void token_parse(std::string);
     void set_func_int(func_uint64_t);
-    void set_func_char(func_uchar_t);
+    void set_func_string(func_string_t);
+    void set_defaults(void);
 };
 
 enum
 {
-    INIT_SIZE = 100,
-    DEC = 10
+    MOD = 10
 };

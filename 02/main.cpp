@@ -1,15 +1,15 @@
 #include <iostream>
 #include <cinttypes>
 #include <cstdio>
+#include <string>
+#include <cassert>
 #include "parser.h"
 
 using namespace std;
 
-enum
-{
-    MOD = 10,
-    BUF_SIZE = 10000
-};
+static uint64_t ans_int = 0;
+static std::string ans_string{};
+static uint64_t ans_str_int = 0;
 
 
 /*ARGUMENT FUNCTIONS FOR UINT64_T & UNSIGNED CHAR * */
@@ -17,110 +17,117 @@ void
 dig_sum(uint64_t num) /*Prints decimal sum of digits in given number*/
 {
     uint64_t tmp = num;
-    uint64_t res = 0;
     while (tmp) {
-        res += tmp % MOD;
+        ans_int += tmp % MOD;
         tmp /= MOD;
     }
-    std::cout << "DIGIT SUM OF " << num << " IS: " << res << std::endl;
 }
 
 void
 square(uint64_t num) /*Prints a ^ 2*/
 {
-    std::cout << "SQUARE OF " << num << " IS: " << num * num << std::endl;
+    ans_int += num * num;
 }
 
 void
-char_print(unsigned char *string) /*Prints string*/
+append_string(std::string string) /*Prints string*/
 {
-    std::cout << "IT'S A STRING! <<" << string << ">>" <<  std::endl;
+    ans_string += string + " ";
 }
 
 void
-length(unsigned char *string) /*Prints string & strlen(string)*/
+length(std::string string) /*Prints string & string.length()*/
 {
-    unsigned char *tmp = string;
-    uint64_t res = 0;
-    while (*tmp) {
-        res++;
-        tmp++;
-    }
-    std::cout << "THE LENGTH OF <<" << string << ">> IS: " << res << std::endl;
+    ans_str_int += string.length();
 }
 
 /*TESTS*/
 
 /*DISCLAIMER: Unfortunately, the developer is too poor to perform a test with a string, such that:
-strlen(string) > ULLONG_MAX, so it's an undefined behaviour guaranteed for this cases, if any other 
+string.length() > ULLONG_MAX, so it's an undefined behaviour guaranteed for this cases, if any other 
 programmers will encounter such kind of situation.*/
 
 void
-init_test(void) /*Basic init test with base int & char functions, which simply do nothing*/
+init_test(void) /*Basic init test with base int & string functions, which simply does nothing*/
 {
+    ans_int = 0;
+    ans_string = {};
     TokenParser *parser = new TokenParser();
-    parser->token_parse((unsigned char *) "Hello, darkness, my old friend...");
+    parser->token_parse(std::string{"Hello, darkness, my old friend..."});
     delete parser;
+    assert(ans_int == 0 && ans_string.length() == 0);
+    std::cout << "INIT TEST COMPLETED" << std::endl;
 }
 
 void
-empty_test(void) /*Checks whether the class can hadle with NULL-valued argument*/
+string_test(void) /*First simple test on a single string & simple custom strlen-print function*/
 {
-    TokenParser *parser = new TokenParser();
-    parser->set_func_int(dig_sum);
-    parser->set_func_char(char_print);
-    parser->token_parse(NULL);
-    delete parser;
-}
-
-void
-letter_test(void) /*First simple test on a single letter & simple custom strlen-print function*/
-{
+    ans_int = 0;
+    ans_str_int = 0;
+    ans_string = {};
     TokenParser *parser = new TokenParser();
     parser->set_func_int(square);
-    parser->set_func_char(length);
-    parser->token_parse((unsigned char *) "a");
+    parser->set_func_string(append_string);
+    parser->token_parse(std::string{"I've come to talk with you again..."});
     delete parser;
+    assert(ans_int == 0 && ans_string == "I've come to talk with you again... ");
+    std::cout << "STRING TEST COMPLETED" << std::endl;
 }
 
 void
 dig_sum_test(void) /*Checks first unsigned-integer-valued string*/
 {
+    ans_int = 0;
+    ans_str_int = 0;
+    ans_string = {};
     TokenParser *parser = new TokenParser();
     parser->set_func_int(dig_sum);
-    parser->set_func_char(char_print);
-    parser->token_parse((unsigned char *) "57");
+    parser->set_func_string(length);
+    parser->token_parse(std::string{"57"});
     delete parser;
+    assert(ans_int == 12 && ans_string.length() == 0 && ans_str_int == 0);
+    std::cout << "DIGIT SUMM TEST COMPLETED" << std::endl;
 }
 
 void
 complex_test(void) /*Checks whether we treat negative ints as uint64_t or not*/
 {
+    ans_int = 0;
+    ans_str_int = 0;
+    ans_string = {};
     TokenParser *parser = new TokenParser();
     parser->set_func_int(square);
-    parser->set_func_char(char_print);
-    parser->token_parse((unsigned char *) "201 GGWP -121");
+    parser->set_func_string(append_string);
+    parser->token_parse(std::string{"201 GGWP -121"});
     delete parser;
+    assert(ans_int == 40401 && ans_string == "GGWP -121 ");
+    std::cout << "COMPLEX TEST COMPLETED" << std::endl;
 }
 
 void
 combine_test(void) /*Checks all types of isspace true-values*/
 {
+    ans_int = 0;
+    ans_str_int = 0;
+    ans_string = {};
     TokenParser *parser = new TokenParser();
     parser->set_func_int(dig_sum);
-    parser->set_func_char(length);
-    parser->token_parse((unsigned char *) "322w33w33\v0\nFEE1\rDEAD\t101\f404");
+    parser->set_func_string(length);
+    parser->token_parse(std::string{"322w33w33\v0\nFEE1\rDEAD\t101\f404"});
     delete parser;
+    assert(ans_int == 10 && ans_str_int == 17);
+    std::cout << "COMBINE TEST COMPLETED" << std::endl;
 }
 
 /*TESTS EXECUTION*/
 int
 main(int argc, char **argv)
 {
-    empty_test();
-    letter_test();
+    init_test();
+    string_test();
     dig_sum_test();
     complex_test();
     combine_test();
+    std::cout << "TESTING COMPLETED!" << std::endl;
     return 0;
 }
