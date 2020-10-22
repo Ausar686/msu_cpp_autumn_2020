@@ -30,7 +30,7 @@ TokenParser::token_parse(std::string string) /*Main function of class. Parses st
         }
         std::string new_string = {};
         bool flag = 1;
-        while (!isspace(string[index]) && index < string.length()) {
+        while (index < string.length() && !isspace(string[index])) {
             new_string += string[index];
             if (!isdigit(string[index])) {
                 flag = 0;
@@ -38,7 +38,7 @@ TokenParser::token_parse(std::string string) /*Main function of class. Parses st
             index++;
         }
         if (flag) {
-            int_func(std::stoll(new_string));
+            int_func(std::stoull(new_string));
         } else {
             string_func(new_string);
         }
