@@ -18,7 +18,7 @@ TokenParser::~TokenParser(void) /*Class destructor*/
 }
 
 void
-TokenParser::token_parse(std::string string) /*Main function of class. Parses string*/
+TokenParser::token_parse(const std::string &string) /*Main function of class. Parses string*/
 {
     uint64_t index = 0;
     while (index < string.length()) {
@@ -30,7 +30,7 @@ TokenParser::token_parse(std::string string) /*Main function of class. Parses st
         }
         std::string new_string = {};
         bool flag = 1;
-        while (index < string.length() && !isspace(string[index])) {
+        while (!isspace(string[index]) && index < string.length()) {
             new_string += string[index];
             if (!isdigit(string[index])) {
                 flag = 0;
@@ -38,7 +38,7 @@ TokenParser::token_parse(std::string string) /*Main function of class. Parses st
             index++;
         }
         if (flag) {
-            int_func(std::stoull(new_string));
+            int_func(std::stoll(new_string));
         } else {
             string_func(new_string);
         }

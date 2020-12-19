@@ -52,9 +52,8 @@ init_test(void) /*Basic init test with base int & string functions, which simply
 {
     ans_int = 0;
     ans_string = {};
-    TokenParser *parser = new TokenParser();
-    parser->token_parse(std::string{"Hello, darkness, my old friend..."});
-    delete parser;
+    TokenParser parser;
+    parser.token_parse(std::string{"Hello, darkness, my old friend..."});
     assert(ans_int == 0 && ans_string.length() == 0);
     std::cout << "INIT TEST COMPLETED" << std::endl;
 }
@@ -65,11 +64,10 @@ string_test(void) /*First simple test on a single string & simple custom strlen-
     ans_int = 0;
     ans_str_int = 0;
     ans_string = {};
-    TokenParser *parser = new TokenParser();
-    parser->set_func_int(square);
-    parser->set_func_string(append_string);
-    parser->token_parse(std::string{"I've come to talk with you again..."});
-    delete parser;
+    TokenParser parser;
+    parser.set_func_int(square);
+    parser.set_func_string(append_string);
+    parser.token_parse(std::string{"I've come to talk with you again..."});
     assert(ans_int == 0 && ans_string == "I've come to talk with you again... ");
     std::cout << "STRING TEST COMPLETED" << std::endl;
 }
@@ -80,11 +78,10 @@ dig_sum_test(void) /*Checks first unsigned-integer-valued string*/
     ans_int = 0;
     ans_str_int = 0;
     ans_string = {};
-    TokenParser *parser = new TokenParser();
-    parser->set_func_int(dig_sum);
-    parser->set_func_string(length);
-    parser->token_parse(std::string{"57"});
-    delete parser;
+    TokenParser parser;
+    parser.set_func_int(dig_sum);
+    parser.set_func_string(length);
+    parser.token_parse(std::string{"57"});
     assert(ans_int == 12 && ans_string.length() == 0 && ans_str_int == 0);
     std::cout << "DIGIT SUMM TEST COMPLETED" << std::endl;
 }
@@ -95,11 +92,10 @@ complex_test(void) /*Checks whether we treat negative ints as uint64_t or not*/
     ans_int = 0;
     ans_str_int = 0;
     ans_string = {};
-    TokenParser *parser = new TokenParser();
-    parser->set_func_int(square);
-    parser->set_func_string(append_string);
-    parser->token_parse(std::string{"201 GGWP -121"});
-    delete parser;
+    TokenParser parser;
+    parser.set_func_int(square);
+    parser.set_func_string(append_string);
+    parser.token_parse(std::string{"201 GGWP -121"});
     assert(ans_int == 40401 && ans_string == "GGWP -121 ");
     std::cout << "COMPLEX TEST COMPLETED" << std::endl;
 }
@@ -110,11 +106,10 @@ combine_test(void) /*Checks all types of isspace true-values*/
     ans_int = 0;
     ans_str_int = 0;
     ans_string = {};
-    TokenParser *parser = new TokenParser();
-    parser->set_func_int(dig_sum);
-    parser->set_func_string(length);
-    parser->token_parse(std::string{"322w33w33\v0\nFEE1\rDEAD\t101\f404"});
-    delete parser;
+    TokenParser parser;
+    parser.set_func_int(dig_sum);
+    parser.set_func_string(length);
+    parser.token_parse(std::string{"322w33w33\v0\nFEE1\rDEAD\t101\f404"});
     assert(ans_int == 10 && ans_str_int == 17);
     std::cout << "COMBINE TEST COMPLETED" << std::endl;
 }
